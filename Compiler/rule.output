@@ -1,0 +1,1535 @@
+Terminaux inutilisés dans la grammaire
+
+   tCONST
+   tVOID
+   tDIFF
+
+
+Grammaire
+
+    0 $accept: start $end
+
+    1 start: fonctions
+
+    2 fonctions: fonction fonctions
+    3          | %empty
+
+    4 fonction: type tID tPARO args tPARF body
+
+    5 type: tINT
+
+    6 args: arg args_suite
+    7     | %empty
+
+    8 args_suite: tVIRG arg args_suite
+    9           | %empty
+
+   10 arg: type tID
+
+   11 body: tACCO instrs tACCF
+
+   12 instrs: instr instrs
+   13       | %empty
+
+   14 instr: appel_fonction
+   15      | declaration_variables
+   16      | calcul
+   17      | printf
+   18      | bloc_if
+   19      | bloc_while
+
+   20 bloc_while: tWHILE tPARO operation tPARF body_while
+
+   21 body_while: tACCO instrs tACCF
+   22           | instr tPV
+
+   23 bloc_if_action: %empty
+
+   24 bloc_else_action: %empty
+
+   25 bloc_if: tIF tPARO operation tPARF bloc_if_action body_if
+
+   26 $@1: %empty
+
+   27 bloc_if: tIF tPARO operation tPARF bloc_if_action body_if bloc_else_action tELSE $@1 body_if
+
+   28 body_if: tACCO instrs tACCF
+   29        | instr tPV
+
+   30 appel_fonction: tID tPARO valeurs tPARF tPV
+
+   31 printf: tIMPR tPARO operation tPARF tPV
+
+   32 $@2: %empty
+
+   33 decl: type tID $@2 decl_affect
+
+   34 decl_affect: %empty
+   35            | tEGAL operation
+
+   36 declaration_variables: decl declaration_variables_suite tPV
+
+   37 $@3: %empty
+
+   38 declaration_variables_suite: tVIRG tID $@3 declaration_variables_suite
+   39                            | %empty
+
+   40 valeurs: operation valeurs_suite
+   41        | %empty
+
+   42 valeurs_suite: tVIRG operation valeurs_suite
+   43              | %empty
+
+   44 valeur_ar: tID
+   45          | tNB
+   46          | appel_fonction
+
+   47 operation: operation tPLUS operation
+   48          | operation tMOINS operation
+   49          | operation tMULT operation
+   50          | operation tDIV operation
+   51          | operation tDOUBLE_EGAL operation
+   52          | operation tINF operation
+   53          | operation tINFE operation
+   54          | operation tSUP operation
+   55          | operation tSUPE operation
+   56          | tPARO operation tPARF
+   57          | valeur_ar
+
+   58 calcul: tID tEGAL operation tPV
+
+
+Terminaux, suivis des règles où ils apparaissent
+
+$end (0) 0
+error (256)
+tVIRG (258) 8 38 42
+tPV (259) 22 29 30 31 36 58
+tIMPR (260) 31
+tACCO (261) 11 21 28
+tACCF (262) 11 21 28
+tPLUS (263) 47
+tMOINS (264) 48
+tMULT (265) 49
+tDIV (266) 50
+tEGAL (267) 35 58
+tPARO (268) 4 20 25 27 30 31 56
+tPARF (269) 4 20 25 27 30 31 56
+tCONST (270)
+tID (271) 4 10 30 33 38 44 58
+tNB (272) 45
+tINT (273) 5
+tVOID (274)
+tWHILE (275) 20
+tIF (276) 25 27
+tELSE (277) 27
+tDOUBLE_EGAL (278) 51
+tDIFF (279)
+tINF (280) 52
+tINFE (281) 53
+tSUP (282) 54
+tSUPE (283) 55
+tTRUC (284)
+
+
+Non-terminaux, suivis des règles où ils apparaissent
+
+$accept (30)
+    à gauche: 0
+start (31)
+    à gauche: 1, à droite: 0
+fonctions (32)
+    à gauche: 2 3, à droite: 1 2
+fonction (33)
+    à gauche: 4, à droite: 2
+type (34)
+    à gauche: 5, à droite: 4 10 33
+args (35)
+    à gauche: 6 7, à droite: 4
+args_suite (36)
+    à gauche: 8 9, à droite: 6 8
+arg (37)
+    à gauche: 10, à droite: 6 8
+body (38)
+    à gauche: 11, à droite: 4
+instrs (39)
+    à gauche: 12 13, à droite: 11 12 21 28
+instr (40)
+    à gauche: 14 15 16 17 18 19, à droite: 12 22 29
+bloc_while (41)
+    à gauche: 20, à droite: 19
+body_while (42)
+    à gauche: 21 22, à droite: 20
+bloc_if_action (43)
+    à gauche: 23, à droite: 25 27
+bloc_else_action (44)
+    à gauche: 24, à droite: 27
+bloc_if (45)
+    à gauche: 25 27, à droite: 18
+$@1 (46)
+    à gauche: 26, à droite: 27
+body_if (47)
+    à gauche: 28 29, à droite: 25 27
+appel_fonction (48)
+    à gauche: 30, à droite: 14 46
+printf (49)
+    à gauche: 31, à droite: 17
+decl (50)
+    à gauche: 33, à droite: 36
+$@2 (51)
+    à gauche: 32, à droite: 33
+decl_affect (52)
+    à gauche: 34 35, à droite: 33
+declaration_variables (53)
+    à gauche: 36, à droite: 15
+declaration_variables_suite (54)
+    à gauche: 38 39, à droite: 36 38
+$@3 (55)
+    à gauche: 37, à droite: 38
+valeurs (56)
+    à gauche: 40 41, à droite: 30
+valeurs_suite (57)
+    à gauche: 42 43, à droite: 40 42
+valeur_ar (58)
+    à gauche: 44 45 46, à droite: 57
+operation (59)
+    à gauche: 47 48 49 50 51 52 53 54 55 56 57, à droite: 20 25 27
+    31 35 40 42 47 48 49 50 51 52 53 54 55 56 58
+calcul (60)
+    à gauche: 58, à droite: 16
+
+
+État 0
+
+    0 $accept: . start $end
+
+    tINT  décalage et aller à l'état 1
+
+    $défaut  réduction par utilisation de la règle 3 (fonctions)
+
+    start      aller à l'état 2
+    fonctions  aller à l'état 3
+    fonction   aller à l'état 4
+    type       aller à l'état 5
+
+
+État 1
+
+    5 type: tINT .
+
+    $défaut  réduction par utilisation de la règle 5 (type)
+
+
+État 2
+
+    0 $accept: start . $end
+
+    $end  décalage et aller à l'état 6
+
+
+État 3
+
+    1 start: fonctions .
+
+    $défaut  réduction par utilisation de la règle 1 (start)
+
+
+État 4
+
+    2 fonctions: fonction . fonctions
+
+    tINT  décalage et aller à l'état 1
+
+    $défaut  réduction par utilisation de la règle 3 (fonctions)
+
+    fonctions  aller à l'état 7
+    fonction   aller à l'état 4
+    type       aller à l'état 5
+
+
+État 5
+
+    4 fonction: type . tID tPARO args tPARF body
+
+    tID  décalage et aller à l'état 8
+
+
+État 6
+
+    0 $accept: start $end .
+
+    $défaut  accepter
+
+
+État 7
+
+    2 fonctions: fonction fonctions .
+
+    $défaut  réduction par utilisation de la règle 2 (fonctions)
+
+
+État 8
+
+    4 fonction: type tID . tPARO args tPARF body
+
+    tPARO  décalage et aller à l'état 9
+
+
+État 9
+
+    4 fonction: type tID tPARO . args tPARF body
+
+    tINT  décalage et aller à l'état 1
+
+    $défaut  réduction par utilisation de la règle 7 (args)
+
+    type  aller à l'état 10
+    args  aller à l'état 11
+    arg   aller à l'état 12
+
+
+État 10
+
+   10 arg: type . tID
+
+    tID  décalage et aller à l'état 13
+
+
+État 11
+
+    4 fonction: type tID tPARO args . tPARF body
+
+    tPARF  décalage et aller à l'état 14
+
+
+État 12
+
+    6 args: arg . args_suite
+
+    tVIRG  décalage et aller à l'état 15
+
+    $défaut  réduction par utilisation de la règle 9 (args_suite)
+
+    args_suite  aller à l'état 16
+
+
+État 13
+
+   10 arg: type tID .
+
+    $défaut  réduction par utilisation de la règle 10 (arg)
+
+
+État 14
+
+    4 fonction: type tID tPARO args tPARF . body
+
+    tACCO  décalage et aller à l'état 17
+
+    body  aller à l'état 18
+
+
+État 15
+
+    8 args_suite: tVIRG . arg args_suite
+
+    tINT  décalage et aller à l'état 1
+
+    type  aller à l'état 10
+    arg   aller à l'état 19
+
+
+État 16
+
+    6 args: arg args_suite .
+
+    $défaut  réduction par utilisation de la règle 6 (args)
+
+
+État 17
+
+   11 body: tACCO . instrs tACCF
+
+    tIMPR   décalage et aller à l'état 20
+    tID     décalage et aller à l'état 21
+    tINT    décalage et aller à l'état 1
+    tWHILE  décalage et aller à l'état 22
+    tIF     décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 13 (instrs)
+
+    type                   aller à l'état 24
+    instrs                 aller à l'état 25
+    instr                  aller à l'état 26
+    bloc_while             aller à l'état 27
+    bloc_if                aller à l'état 28
+    appel_fonction         aller à l'état 29
+    printf                 aller à l'état 30
+    decl                   aller à l'état 31
+    declaration_variables  aller à l'état 32
+    calcul                 aller à l'état 33
+
+
+État 18
+
+    4 fonction: type tID tPARO args tPARF body .
+
+    $défaut  réduction par utilisation de la règle 4 (fonction)
+
+
+État 19
+
+    8 args_suite: tVIRG arg . args_suite
+
+    tVIRG  décalage et aller à l'état 15
+
+    $défaut  réduction par utilisation de la règle 9 (args_suite)
+
+    args_suite  aller à l'état 34
+
+
+État 20
+
+   31 printf: tIMPR . tPARO operation tPARF tPV
+
+    tPARO  décalage et aller à l'état 35
+
+
+État 21
+
+   30 appel_fonction: tID . tPARO valeurs tPARF tPV
+   58 calcul: tID . tEGAL operation tPV
+
+    tEGAL  décalage et aller à l'état 36
+    tPARO  décalage et aller à l'état 37
+
+
+État 22
+
+   20 bloc_while: tWHILE . tPARO operation tPARF body_while
+
+    tPARO  décalage et aller à l'état 38
+
+
+État 23
+
+   25 bloc_if: tIF . tPARO operation tPARF bloc_if_action body_if
+   27        | tIF . tPARO operation tPARF bloc_if_action body_if bloc_else_action tELSE $@1 body_if
+
+    tPARO  décalage et aller à l'état 39
+
+
+État 24
+
+   33 decl: type . tID $@2 decl_affect
+
+    tID  décalage et aller à l'état 40
+
+
+État 25
+
+   11 body: tACCO instrs . tACCF
+
+    tACCF  décalage et aller à l'état 41
+
+
+État 26
+
+   12 instrs: instr . instrs
+
+    tIMPR   décalage et aller à l'état 20
+    tID     décalage et aller à l'état 21
+    tINT    décalage et aller à l'état 1
+    tWHILE  décalage et aller à l'état 22
+    tIF     décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 13 (instrs)
+
+    type                   aller à l'état 24
+    instrs                 aller à l'état 42
+    instr                  aller à l'état 26
+    bloc_while             aller à l'état 27
+    bloc_if                aller à l'état 28
+    appel_fonction         aller à l'état 29
+    printf                 aller à l'état 30
+    decl                   aller à l'état 31
+    declaration_variables  aller à l'état 32
+    calcul                 aller à l'état 33
+
+
+État 27
+
+   19 instr: bloc_while .
+
+    $défaut  réduction par utilisation de la règle 19 (instr)
+
+
+État 28
+
+   18 instr: bloc_if .
+
+    $défaut  réduction par utilisation de la règle 18 (instr)
+
+
+État 29
+
+   14 instr: appel_fonction .
+
+    $défaut  réduction par utilisation de la règle 14 (instr)
+
+
+État 30
+
+   17 instr: printf .
+
+    $défaut  réduction par utilisation de la règle 17 (instr)
+
+
+État 31
+
+   36 declaration_variables: decl . declaration_variables_suite tPV
+
+    tVIRG  décalage et aller à l'état 43
+
+    $défaut  réduction par utilisation de la règle 39 (declaration_variables_suite)
+
+    declaration_variables_suite  aller à l'état 44
+
+
+État 32
+
+   15 instr: declaration_variables .
+
+    $défaut  réduction par utilisation de la règle 15 (instr)
+
+
+État 33
+
+   16 instr: calcul .
+
+    $défaut  réduction par utilisation de la règle 16 (instr)
+
+
+État 34
+
+    8 args_suite: tVIRG arg args_suite .
+
+    $défaut  réduction par utilisation de la règle 8 (args_suite)
+
+
+État 35
+
+   31 printf: tIMPR tPARO . operation tPARF tPV
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 50
+
+
+État 36
+
+   58 calcul: tID tEGAL . operation tPV
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 51
+
+
+État 37
+
+   30 appel_fonction: tID tPARO . valeurs tPARF tPV
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    $défaut  réduction par utilisation de la règle 41 (valeurs)
+
+    appel_fonction  aller à l'état 48
+    valeurs         aller à l'état 52
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 53
+
+
+État 38
+
+   20 bloc_while: tWHILE tPARO . operation tPARF body_while
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 54
+
+
+État 39
+
+   25 bloc_if: tIF tPARO . operation tPARF bloc_if_action body_if
+   27        | tIF tPARO . operation tPARF bloc_if_action body_if bloc_else_action tELSE $@1 body_if
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 55
+
+
+État 40
+
+   33 decl: type tID . $@2 decl_affect
+
+    $défaut  réduction par utilisation de la règle 32 ($@2)
+
+    $@2  aller à l'état 56
+
+
+État 41
+
+   11 body: tACCO instrs tACCF .
+
+    $défaut  réduction par utilisation de la règle 11 (body)
+
+
+État 42
+
+   12 instrs: instr instrs .
+
+    $défaut  réduction par utilisation de la règle 12 (instrs)
+
+
+État 43
+
+   38 declaration_variables_suite: tVIRG . tID $@3 declaration_variables_suite
+
+    tID  décalage et aller à l'état 57
+
+
+État 44
+
+   36 declaration_variables: decl declaration_variables_suite . tPV
+
+    tPV  décalage et aller à l'état 58
+
+
+État 45
+
+   56 operation: tPARO . operation tPARF
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 59
+
+
+État 46
+
+   30 appel_fonction: tID . tPARO valeurs tPARF tPV
+   44 valeur_ar: tID .
+
+    tPARO  décalage et aller à l'état 37
+
+    $défaut  réduction par utilisation de la règle 44 (valeur_ar)
+
+
+État 47
+
+   45 valeur_ar: tNB .
+
+    $défaut  réduction par utilisation de la règle 45 (valeur_ar)
+
+
+État 48
+
+   46 valeur_ar: appel_fonction .
+
+    $défaut  réduction par utilisation de la règle 46 (valeur_ar)
+
+
+État 49
+
+   57 operation: valeur_ar .
+
+    $défaut  réduction par utilisation de la règle 57 (operation)
+
+
+État 50
+
+   31 printf: tIMPR tPARO operation . tPARF tPV
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    tPLUS         décalage et aller à l'état 60
+    tMOINS        décalage et aller à l'état 61
+    tMULT         décalage et aller à l'état 62
+    tDIV          décalage et aller à l'état 63
+    tPARF         décalage et aller à l'état 64
+    tDOUBLE_EGAL  décalage et aller à l'état 65
+    tINF          décalage et aller à l'état 66
+    tINFE         décalage et aller à l'état 67
+    tSUP          décalage et aller à l'état 68
+    tSUPE         décalage et aller à l'état 69
+
+
+État 51
+
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+   58 calcul: tID tEGAL operation . tPV
+
+    tPV           décalage et aller à l'état 70
+    tPLUS         décalage et aller à l'état 60
+    tMOINS        décalage et aller à l'état 61
+    tMULT         décalage et aller à l'état 62
+    tDIV          décalage et aller à l'état 63
+    tDOUBLE_EGAL  décalage et aller à l'état 65
+    tINF          décalage et aller à l'état 66
+    tINFE         décalage et aller à l'état 67
+    tSUP          décalage et aller à l'état 68
+    tSUPE         décalage et aller à l'état 69
+
+
+État 52
+
+   30 appel_fonction: tID tPARO valeurs . tPARF tPV
+
+    tPARF  décalage et aller à l'état 71
+
+
+État 53
+
+   40 valeurs: operation . valeurs_suite
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    tVIRG         décalage et aller à l'état 72
+    tPLUS         décalage et aller à l'état 60
+    tMOINS        décalage et aller à l'état 61
+    tMULT         décalage et aller à l'état 62
+    tDIV          décalage et aller à l'état 63
+    tDOUBLE_EGAL  décalage et aller à l'état 65
+    tINF          décalage et aller à l'état 66
+    tINFE         décalage et aller à l'état 67
+    tSUP          décalage et aller à l'état 68
+    tSUPE         décalage et aller à l'état 69
+
+    $défaut  réduction par utilisation de la règle 43 (valeurs_suite)
+
+    valeurs_suite  aller à l'état 73
+
+
+État 54
+
+   20 bloc_while: tWHILE tPARO operation . tPARF body_while
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    tPLUS         décalage et aller à l'état 60
+    tMOINS        décalage et aller à l'état 61
+    tMULT         décalage et aller à l'état 62
+    tDIV          décalage et aller à l'état 63
+    tPARF         décalage et aller à l'état 74
+    tDOUBLE_EGAL  décalage et aller à l'état 65
+    tINF          décalage et aller à l'état 66
+    tINFE         décalage et aller à l'état 67
+    tSUP          décalage et aller à l'état 68
+    tSUPE         décalage et aller à l'état 69
+
+
+État 55
+
+   25 bloc_if: tIF tPARO operation . tPARF bloc_if_action body_if
+   27        | tIF tPARO operation . tPARF bloc_if_action body_if bloc_else_action tELSE $@1 body_if
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    tPLUS         décalage et aller à l'état 60
+    tMOINS        décalage et aller à l'état 61
+    tMULT         décalage et aller à l'état 62
+    tDIV          décalage et aller à l'état 63
+    tPARF         décalage et aller à l'état 75
+    tDOUBLE_EGAL  décalage et aller à l'état 65
+    tINF          décalage et aller à l'état 66
+    tINFE         décalage et aller à l'état 67
+    tSUP          décalage et aller à l'état 68
+    tSUPE         décalage et aller à l'état 69
+
+
+État 56
+
+   33 decl: type tID $@2 . decl_affect
+
+    tEGAL  décalage et aller à l'état 76
+
+    $défaut  réduction par utilisation de la règle 34 (decl_affect)
+
+    decl_affect  aller à l'état 77
+
+
+État 57
+
+   38 declaration_variables_suite: tVIRG tID . $@3 declaration_variables_suite
+
+    $défaut  réduction par utilisation de la règle 37 ($@3)
+
+    $@3  aller à l'état 78
+
+
+État 58
+
+   36 declaration_variables: decl declaration_variables_suite tPV .
+
+    $défaut  réduction par utilisation de la règle 36 (declaration_variables)
+
+
+État 59
+
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+   56          | tPARO operation . tPARF
+
+    tPLUS         décalage et aller à l'état 60
+    tMOINS        décalage et aller à l'état 61
+    tMULT         décalage et aller à l'état 62
+    tDIV          décalage et aller à l'état 63
+    tPARF         décalage et aller à l'état 79
+    tDOUBLE_EGAL  décalage et aller à l'état 65
+    tINF          décalage et aller à l'état 66
+    tINFE         décalage et aller à l'état 67
+    tSUP          décalage et aller à l'état 68
+    tSUPE         décalage et aller à l'état 69
+
+
+État 60
+
+   47 operation: operation tPLUS . operation
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 80
+
+
+État 61
+
+   48 operation: operation tMOINS . operation
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 81
+
+
+État 62
+
+   49 operation: operation tMULT . operation
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 82
+
+
+État 63
+
+   50 operation: operation tDIV . operation
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 83
+
+
+État 64
+
+   31 printf: tIMPR tPARO operation tPARF . tPV
+
+    tPV  décalage et aller à l'état 84
+
+
+État 65
+
+   51 operation: operation tDOUBLE_EGAL . operation
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 85
+
+
+État 66
+
+   52 operation: operation tINF . operation
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 86
+
+
+État 67
+
+   53 operation: operation tINFE . operation
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 87
+
+
+État 68
+
+   54 operation: operation tSUP . operation
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 88
+
+
+État 69
+
+   55 operation: operation tSUPE . operation
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 89
+
+
+État 70
+
+   58 calcul: tID tEGAL operation tPV .
+
+    $défaut  réduction par utilisation de la règle 58 (calcul)
+
+
+État 71
+
+   30 appel_fonction: tID tPARO valeurs tPARF . tPV
+
+    tPV  décalage et aller à l'état 90
+
+
+État 72
+
+   42 valeurs_suite: tVIRG . operation valeurs_suite
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 91
+
+
+État 73
+
+   40 valeurs: operation valeurs_suite .
+
+    $défaut  réduction par utilisation de la règle 40 (valeurs)
+
+
+État 74
+
+   20 bloc_while: tWHILE tPARO operation tPARF . body_while
+
+    tIMPR   décalage et aller à l'état 20
+    tACCO   décalage et aller à l'état 92
+    tID     décalage et aller à l'état 21
+    tINT    décalage et aller à l'état 1
+    tWHILE  décalage et aller à l'état 22
+    tIF     décalage et aller à l'état 23
+
+    type                   aller à l'état 24
+    instr                  aller à l'état 93
+    bloc_while             aller à l'état 27
+    body_while             aller à l'état 94
+    bloc_if                aller à l'état 28
+    appel_fonction         aller à l'état 29
+    printf                 aller à l'état 30
+    decl                   aller à l'état 31
+    declaration_variables  aller à l'état 32
+    calcul                 aller à l'état 33
+
+
+État 75
+
+   25 bloc_if: tIF tPARO operation tPARF . bloc_if_action body_if
+   27        | tIF tPARO operation tPARF . bloc_if_action body_if bloc_else_action tELSE $@1 body_if
+
+    $défaut  réduction par utilisation de la règle 23 (bloc_if_action)
+
+    bloc_if_action  aller à l'état 95
+
+
+État 76
+
+   35 decl_affect: tEGAL . operation
+
+    tPARO  décalage et aller à l'état 45
+    tID    décalage et aller à l'état 46
+    tNB    décalage et aller à l'état 47
+
+    appel_fonction  aller à l'état 48
+    valeur_ar       aller à l'état 49
+    operation       aller à l'état 96
+
+
+État 77
+
+   33 decl: type tID $@2 decl_affect .
+
+    $défaut  réduction par utilisation de la règle 33 (decl)
+
+
+État 78
+
+   38 declaration_variables_suite: tVIRG tID $@3 . declaration_variables_suite
+
+    tVIRG  décalage et aller à l'état 43
+
+    $défaut  réduction par utilisation de la règle 39 (declaration_variables_suite)
+
+    declaration_variables_suite  aller à l'état 97
+
+
+État 79
+
+   56 operation: tPARO operation tPARF .
+
+    $défaut  réduction par utilisation de la règle 56 (operation)
+
+
+État 80
+
+   47 operation: operation . tPLUS operation
+   47          | operation tPLUS operation .
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    tMULT  décalage et aller à l'état 62
+    tDIV   décalage et aller à l'état 63
+
+    $défaut  réduction par utilisation de la règle 47 (operation)
+
+
+État 81
+
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   48          | operation tMOINS operation .
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    tMULT  décalage et aller à l'état 62
+    tDIV   décalage et aller à l'état 63
+
+    $défaut  réduction par utilisation de la règle 48 (operation)
+
+
+État 82
+
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   49          | operation tMULT operation .
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    $défaut  réduction par utilisation de la règle 49 (operation)
+
+
+État 83
+
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   50          | operation tDIV operation .
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    $défaut  réduction par utilisation de la règle 50 (operation)
+
+
+État 84
+
+   31 printf: tIMPR tPARO operation tPARF tPV .
+
+    $défaut  réduction par utilisation de la règle 31 (printf)
+
+
+État 85
+
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   51          | operation tDOUBLE_EGAL operation .
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    tPLUS   décalage et aller à l'état 60
+    tMOINS  décalage et aller à l'état 61
+    tMULT   décalage et aller à l'état 62
+    tDIV    décalage et aller à l'état 63
+
+    $défaut  réduction par utilisation de la règle 51 (operation)
+
+
+État 86
+
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   52          | operation tINF operation .
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    tPLUS   décalage et aller à l'état 60
+    tMOINS  décalage et aller à l'état 61
+    tMULT   décalage et aller à l'état 62
+    tDIV    décalage et aller à l'état 63
+
+    $défaut  réduction par utilisation de la règle 52 (operation)
+
+
+État 87
+
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   53          | operation tINFE operation .
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    tPLUS   décalage et aller à l'état 60
+    tMOINS  décalage et aller à l'état 61
+    tMULT   décalage et aller à l'état 62
+    tDIV    décalage et aller à l'état 63
+
+    $défaut  réduction par utilisation de la règle 53 (operation)
+
+
+État 88
+
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   54          | operation tSUP operation .
+   55          | operation . tSUPE operation
+
+    tPLUS   décalage et aller à l'état 60
+    tMOINS  décalage et aller à l'état 61
+    tMULT   décalage et aller à l'état 62
+    tDIV    décalage et aller à l'état 63
+
+    $défaut  réduction par utilisation de la règle 54 (operation)
+
+
+État 89
+
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+   55          | operation tSUPE operation .
+
+    tPLUS   décalage et aller à l'état 60
+    tMOINS  décalage et aller à l'état 61
+    tMULT   décalage et aller à l'état 62
+    tDIV    décalage et aller à l'état 63
+
+    $défaut  réduction par utilisation de la règle 55 (operation)
+
+
+État 90
+
+   30 appel_fonction: tID tPARO valeurs tPARF tPV .
+
+    $défaut  réduction par utilisation de la règle 30 (appel_fonction)
+
+
+État 91
+
+   42 valeurs_suite: tVIRG operation . valeurs_suite
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    tVIRG         décalage et aller à l'état 72
+    tPLUS         décalage et aller à l'état 60
+    tMOINS        décalage et aller à l'état 61
+    tMULT         décalage et aller à l'état 62
+    tDIV          décalage et aller à l'état 63
+    tDOUBLE_EGAL  décalage et aller à l'état 65
+    tINF          décalage et aller à l'état 66
+    tINFE         décalage et aller à l'état 67
+    tSUP          décalage et aller à l'état 68
+    tSUPE         décalage et aller à l'état 69
+
+    $défaut  réduction par utilisation de la règle 43 (valeurs_suite)
+
+    valeurs_suite  aller à l'état 98
+
+
+État 92
+
+   21 body_while: tACCO . instrs tACCF
+
+    tIMPR   décalage et aller à l'état 20
+    tID     décalage et aller à l'état 21
+    tINT    décalage et aller à l'état 1
+    tWHILE  décalage et aller à l'état 22
+    tIF     décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 13 (instrs)
+
+    type                   aller à l'état 24
+    instrs                 aller à l'état 99
+    instr                  aller à l'état 26
+    bloc_while             aller à l'état 27
+    bloc_if                aller à l'état 28
+    appel_fonction         aller à l'état 29
+    printf                 aller à l'état 30
+    decl                   aller à l'état 31
+    declaration_variables  aller à l'état 32
+    calcul                 aller à l'état 33
+
+
+État 93
+
+   22 body_while: instr . tPV
+
+    tPV  décalage et aller à l'état 100
+
+
+État 94
+
+   20 bloc_while: tWHILE tPARO operation tPARF body_while .
+
+    $défaut  réduction par utilisation de la règle 20 (bloc_while)
+
+
+État 95
+
+   25 bloc_if: tIF tPARO operation tPARF bloc_if_action . body_if
+   27        | tIF tPARO operation tPARF bloc_if_action . body_if bloc_else_action tELSE $@1 body_if
+
+    tIMPR   décalage et aller à l'état 20
+    tACCO   décalage et aller à l'état 101
+    tID     décalage et aller à l'état 21
+    tINT    décalage et aller à l'état 1
+    tWHILE  décalage et aller à l'état 22
+    tIF     décalage et aller à l'état 23
+
+    type                   aller à l'état 24
+    instr                  aller à l'état 102
+    bloc_while             aller à l'état 27
+    bloc_if                aller à l'état 28
+    body_if                aller à l'état 103
+    appel_fonction         aller à l'état 29
+    printf                 aller à l'état 30
+    decl                   aller à l'état 31
+    declaration_variables  aller à l'état 32
+    calcul                 aller à l'état 33
+
+
+État 96
+
+   35 decl_affect: tEGAL operation .
+   47 operation: operation . tPLUS operation
+   48          | operation . tMOINS operation
+   49          | operation . tMULT operation
+   50          | operation . tDIV operation
+   51          | operation . tDOUBLE_EGAL operation
+   52          | operation . tINF operation
+   53          | operation . tINFE operation
+   54          | operation . tSUP operation
+   55          | operation . tSUPE operation
+
+    tPLUS         décalage et aller à l'état 60
+    tMOINS        décalage et aller à l'état 61
+    tMULT         décalage et aller à l'état 62
+    tDIV          décalage et aller à l'état 63
+    tDOUBLE_EGAL  décalage et aller à l'état 65
+    tINF          décalage et aller à l'état 66
+    tINFE         décalage et aller à l'état 67
+    tSUP          décalage et aller à l'état 68
+    tSUPE         décalage et aller à l'état 69
+
+    $défaut  réduction par utilisation de la règle 35 (decl_affect)
+
+
+État 97
+
+   38 declaration_variables_suite: tVIRG tID $@3 declaration_variables_suite .
+
+    $défaut  réduction par utilisation de la règle 38 (declaration_variables_suite)
+
+
+État 98
+
+   42 valeurs_suite: tVIRG operation valeurs_suite .
+
+    $défaut  réduction par utilisation de la règle 42 (valeurs_suite)
+
+
+État 99
+
+   21 body_while: tACCO instrs . tACCF
+
+    tACCF  décalage et aller à l'état 104
+
+
+État 100
+
+   22 body_while: instr tPV .
+
+    $défaut  réduction par utilisation de la règle 22 (body_while)
+
+
+État 101
+
+   28 body_if: tACCO . instrs tACCF
+
+    tIMPR   décalage et aller à l'état 20
+    tID     décalage et aller à l'état 21
+    tINT    décalage et aller à l'état 1
+    tWHILE  décalage et aller à l'état 22
+    tIF     décalage et aller à l'état 23
+
+    $défaut  réduction par utilisation de la règle 13 (instrs)
+
+    type                   aller à l'état 24
+    instrs                 aller à l'état 105
+    instr                  aller à l'état 26
+    bloc_while             aller à l'état 27
+    bloc_if                aller à l'état 28
+    appel_fonction         aller à l'état 29
+    printf                 aller à l'état 30
+    decl                   aller à l'état 31
+    declaration_variables  aller à l'état 32
+    calcul                 aller à l'état 33
+
+
+État 102
+
+   29 body_if: instr . tPV
+
+    tPV  décalage et aller à l'état 106
+
+
+État 103
+
+   25 bloc_if: tIF tPARO operation tPARF bloc_if_action body_if .
+   27        | tIF tPARO operation tPARF bloc_if_action body_if . bloc_else_action tELSE $@1 body_if
+
+    tELSE     réduction par utilisation de la règle 24 (bloc_else_action)
+    $défaut  réduction par utilisation de la règle 25 (bloc_if)
+
+    bloc_else_action  aller à l'état 107
+
+
+État 104
+
+   21 body_while: tACCO instrs tACCF .
+
+    $défaut  réduction par utilisation de la règle 21 (body_while)
+
+
+État 105
+
+   28 body_if: tACCO instrs . tACCF
+
+    tACCF  décalage et aller à l'état 108
+
+
+État 106
+
+   29 body_if: instr tPV .
+
+    $défaut  réduction par utilisation de la règle 29 (body_if)
+
+
+État 107
+
+   27 bloc_if: tIF tPARO operation tPARF bloc_if_action body_if bloc_else_action . tELSE $@1 body_if
+
+    tELSE  décalage et aller à l'état 109
+
+
+État 108
+
+   28 body_if: tACCO instrs tACCF .
+
+    $défaut  réduction par utilisation de la règle 28 (body_if)
+
+
+État 109
+
+   27 bloc_if: tIF tPARO operation tPARF bloc_if_action body_if bloc_else_action tELSE . $@1 body_if
+
+    $défaut  réduction par utilisation de la règle 26 ($@1)
+
+    $@1  aller à l'état 110
+
+
+État 110
+
+   27 bloc_if: tIF tPARO operation tPARF bloc_if_action body_if bloc_else_action tELSE $@1 . body_if
+
+    tIMPR   décalage et aller à l'état 20
+    tACCO   décalage et aller à l'état 101
+    tID     décalage et aller à l'état 21
+    tINT    décalage et aller à l'état 1
+    tWHILE  décalage et aller à l'état 22
+    tIF     décalage et aller à l'état 23
+
+    type                   aller à l'état 24
+    instr                  aller à l'état 102
+    bloc_while             aller à l'état 27
+    bloc_if                aller à l'état 28
+    body_if                aller à l'état 111
+    appel_fonction         aller à l'état 29
+    printf                 aller à l'état 30
+    decl                   aller à l'état 31
+    declaration_variables  aller à l'état 32
+    calcul                 aller à l'état 33
+
+
+État 111
+
+   27 bloc_if: tIF tPARO operation tPARF bloc_if_action body_if bloc_else_action tELSE $@1 body_if .
+
+    $défaut  réduction par utilisation de la règle 27 (bloc_if)

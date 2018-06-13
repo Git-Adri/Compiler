@@ -1,0 +1,3 @@
+1- On a choisi de permettre de faire plusieurs déclarations sur une même ligne.
+2- Pour l'instant on n'autorise pas les chiffres dans les noms de variables.
+3- On ne peut pas déclarer un pointeur et lui attribuer une valeur dans la même ligne, il faut le faire en deux fois 
